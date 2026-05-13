@@ -240,37 +240,6 @@ class _ReviewPageState extends State<ReviewPage> {
                 ),
                 const SizedBox(height: 16),
 
-                // Image picker
-                GestureDetector(
-                  onTap: _pickImage,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.image_outlined,
-                            color: brandColor, size: 20),
-                        const SizedBox(width: 8),
-                        Text(
-                          _image != null || _imageBytes != null
-                              ? 'Change Photo'
-                              : 'Attach a Photo (optional)',
-                          style: const TextStyle(
-                            color: brandColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
                 // Image preview
                 if (_image != null || _imageBytes != null) ...[
                   const SizedBox(height: 12),
