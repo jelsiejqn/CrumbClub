@@ -81,12 +81,6 @@ class HomeContent extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Crumb Club'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              Provider.of<AuthProvider>(context, listen: false).signOut();
-            },
-          ),
         ],
       ),
       body: Column(
