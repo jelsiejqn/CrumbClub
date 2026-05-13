@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import '../services/firestore_service.dart';
-import '../models/review.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,7 +17,9 @@ class ProfileScreen extends StatelessWidget {
     if (user == null) {
       return const Scaffold(
         backgroundColor: creamColor,
-        body: Center(child: CircularProgressIndicator(color: brandColor)),
+        body: Center(
+          child: CircularProgressIndicator(color: brandColor),
+        ),
       );
     }
 
@@ -27,12 +27,14 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: creamColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 16.0,
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // ← everything centered
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
-              // Logo replaces AppBar
+              // Logo
               Image.asset(
                 'assets/images/logo2.png',
                 height: 60,
@@ -62,57 +64,170 @@ class ProfileScreen extends StatelessWidget {
               // Username
               Text(
                 user.username,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: brandColor,
                   fontSize: 22,
                   fontWeight: FontWeight.w900,
                 ),
-                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 4),
 
               // Email
               Text(
                 user.email,
-                style: const TextStyle(color: darkGray, fontSize: 14),
                 textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: darkGray,
+                  fontSize: 14,
+                ),
               ),
               const SizedBox(height: 4),
 
-              // Joined date
+              // Joined Date
               Text(
                 'Joined: ${user.joinedAt.toDate().toString().split(' ')[0]}',
-                style: const TextStyle(color: darkGray, fontSize: 14),
                 textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: darkGray,
+                  fontSize: 14,
+                ),
               ),
-              const SizedBox(height: 300),
 
-              // Logout button — blue filled, cream text
+              const Spacer(),
+
+              // Logout Button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (dialogContext) => AlertDialog(
-                        title: const Text('Log Out'),
-                        content: const Text('Are you sure you want to log out?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(dialogContext),
-                            child: const Text('Cancel'),
+                      builder: (dialogContext) => Dialog(
+                        backgroundColor: Colors.transparent,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(24),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(dialogContext);
-                              auth.signOut();
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.red,
-                            ),
-                            child: const Text('Log Out'),
+                          padding: const EdgeInsets.all(28),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Icon badge
+                              Container(
+                                width: 64,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color:
+                                  brandColor.withOpacity(0.08),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.logout_rounded,
+                                  color: brandColor,
+                                  size: 30,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+
+                              // Title
+                              const Text(
+                                'Log Out',
+                                style: TextStyle(
+                                  color: brandColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 0.3,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+
+                              // Subtitle
+                              const Text(
+                                'Are you sure you want to log out?',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: darkGray,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.5,
+                                ),
+                              ),
+                              const SizedBox(height: 28),
+
+                              // Buttons
+                              Row(
+                                children: [
+                                  // Cancel
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(dialogContext),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        foregroundColor: brandColor,
+                                        padding:
+                                        const EdgeInsets.symmetric(
+                                          vertical: 14,
+                                        ),
+                                        shape:
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          fontWeight:
+                                          FontWeight.w700,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+
+                                  // Log Out
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(dialogContext);
+                                        auth.signOut();
+                                      },
+                                      style:
+                                      ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                        brandColor,
+                                        foregroundColor:
+                                        creamColor,
+                                        elevation: 0,
+                                        padding:
+                                        const EdgeInsets.symmetric(
+                                          vertical: 14,
+                                        ),
+                                        shape:
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'Log Out',
+                                        style: TextStyle(
+                                          fontWeight:
+                                          FontWeight.w700,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     );
                   },
@@ -120,16 +235,15 @@ class ProfileScreen extends StatelessWidget {
                     backgroundColor: brandColor,
                     foregroundColor: creamColor,
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
-                    'Logout',
+                    'Log Out',
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
