@@ -8,10 +8,13 @@ import 'constants/colors.dart';
 import 'screens/auth/login.dart';
 import 'screens/home.dart';
 import 'utils/seed_restaurants.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   
   // Running seed to ensure all 10 restaurants and 30 reviews are present
   // await SeedRestaurants.seed();

@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _screens = [
-      const HomeContent(),
+      HomeContent(searchController: _searchController),
       const ReviewsScreen(),
       const ProfileScreen(),
     ];
@@ -70,7 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeContent extends StatelessWidget {
-  const HomeContent({super.key});
+  final TextEditingController searchController;
+  const HomeContent({super.key, required this.searchController});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +94,7 @@ class HomeContent extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
-              controller: TextEditingController(),
+              controller: searchController,
               decoration: const InputDecoration(
                 hintText: 'Search restaurants...',
                 prefixIcon: Icon(Icons.search),
